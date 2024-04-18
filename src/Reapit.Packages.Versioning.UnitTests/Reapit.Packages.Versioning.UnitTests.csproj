@@ -23,4 +23,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Reapit.Packages.Versioning\Reapit.Packages.Versioning.csproj" />
+  </ItemGroup>
+
 </Project>
