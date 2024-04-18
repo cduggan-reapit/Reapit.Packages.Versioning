@@ -1,0 +1,50 @@
+name: Build and Test
+on: [push, pull_request]
+
+jobs: 
+  build-and-test:
+    name: Build and test project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Build project
+        run: |
+          dotnet restore ./src/ --ignore-failed-sources
+          dotnet build ./src/ --no-restore
+      
+      - name: Test project 
+        run: |
+          dotnet test ./src/ --no-build --logger trx --results-directory test-results --collect:"xplat code coverage"
+      
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with: 
+          name: test-results
+          path: test-results/*.trx
+      
+      - name: Generate report
+        run: |
+          mkdir code-coverage
+          cp ./test-results/*/coverage.cobertura.xml ./test-results/coverage.cobertura.xml
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          reportgenerator -reports:"test-results/coverage.cobertura.xml" -targetdir:"code-coverage" -reporttypes:Html
+       
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with: 
+          name: code-coverage
+          path: code-coverage

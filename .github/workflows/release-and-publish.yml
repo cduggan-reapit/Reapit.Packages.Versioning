@@ -1,0 +1,51 @@
+name: Release and Publish
+
+on: 
+  push:
+    branches:
+      - main
+
+env: 
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_PACKAGE_FEED: https://nuget.pkg.github.com/cduggan-reapit/index.json
+  VERSION_CREATED: '0.0.0'
+  HUSKY: 0
+jobs:
+  release:
+    name: Release and Publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+      packages: write
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Install project dependencies
+        run: npm ci
+      
+      # Cut a new version if necessary
+      - name: Create release
+        run: npx semantic-release
+
+      - name: Publish to feed
+        # don't run this if we've not created a new version
+        if: ${{ env.VERSION_CREATED != '0.0.0' }}
+        run: |
+          dotnet pack ./src/Reapit.Packages.Versioning/Reapit.Packages.Versioning.csproj -o ./package/ -c Release
+          dotnet nuget push ./package/*.nupkg --source ${GH_PACKAGE_FEED} --api-key ${GITHUB_TOKEN} --skip-duplicate --no-symbols

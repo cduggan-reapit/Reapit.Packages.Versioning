@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reapit.Packages.Versioning", "Reapit.Packages.Versioning\Reapit.Packages.Versioning.csproj", "{DBAB70A7-9EDA-4F0C-89FB-41D63B127FC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reapit.Packages.Versioning.UnitTests", "Reapit.Packages.Versioning.UnitTests\Reapit.Packages.Versioning.UnitTests.csproj", "{7B699820-8C64-413C-B1FA-21BBA5072208}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{45E1F6EB-62DF-439E-A3C0-01B5EED2B07A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github", "Github", "{DF4E35A1-BF09-4A7B-B9CD-FD4C86333449}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\CODEOWNERS = ..\.github\CODEOWNERS
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{A28B58B1-1FD4-4AC1-9AFC-B0370972D7C1}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\commit-linting.yml = ..\.github\workflows\commit-linting.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBAB70A7-9EDA-4F0C-89FB-41D63B127FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBAB70A7-9EDA-4F0C-89FB-41D63B127FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBAB70A7-9EDA-4F0C-89FB-41D63B127FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBAB70A7-9EDA-4F0C-89FB-41D63B127FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B699820-8C64-413C-B1FA-21BBA5072208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B699820-8C64-413C-B1FA-21BBA5072208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B699820-8C64-413C-B1FA-21BBA5072208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B699820-8C64-413C-B1FA-21BBA5072208}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF4E35A1-BF09-4A7B-B9CD-FD4C86333449} = {45E1F6EB-62DF-439E-A3C0-01B5EED2B07A}
+		{A28B58B1-1FD4-4AC1-9AFC-B0370972D7C1} = {DF4E35A1-BF09-4A7B-B9CD-FD4C86333449}
+	EndGlobalSection
+EndGlobal
