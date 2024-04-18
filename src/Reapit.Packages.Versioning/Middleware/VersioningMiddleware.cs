@@ -19,7 +19,8 @@ public class VersioningMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var endpoint = context.GetEndpoint()?.Metadata.GetMetadata<ApiVersionDateAttribute>();
+        var e = context.GetEndpoint();
+        var endpoint = e?.Metadata.GetMetadata<ApiVersionDateAttribute>();
         var version = endpoint?.Version;
 
         // Remember - we're not actually implementing versioning.  Each endpoint must be unique at the moment, so all
@@ -34,10 +35,5 @@ public class VersioningMiddleware
         }
 
         await _next(context);
-    }
-
-    private void ValidateVersion(IHeaderDictionary headers, string requiredVersion)
-    {
-        
     }
 }
