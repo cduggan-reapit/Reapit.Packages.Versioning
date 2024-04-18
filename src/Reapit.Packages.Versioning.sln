@@ -17,6 +17,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{A28B58B1-1FD4-4AC1-9AFC-B0370972D7C1}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\workflows\commit-linting.yml = ..\.github\workflows\commit-linting.yml
+		..\.github\workflows\build-and-test.yml = ..\.github\workflows\build-and-test.yml
+		..\.github\workflows\release-and-publish.yml = ..\.github\workflows\release-and-publish.yml
 	EndProjectSection
 EndProject
 Global
