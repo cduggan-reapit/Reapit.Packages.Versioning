@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Http;
 using Reapit.Packages.Versioning.Attributes;
 using Reapit.Packages.Versioning.Configuration;
@@ -19,9 +18,11 @@ public class VersioningMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var e = context.GetEndpoint();
-        var endpoint = e?.Metadata.GetMetadata<ApiVersionDateAttribute>();
-        var version = endpoint?.Version;
+        // Get the ApiVersionDateAttribute value from the matched route
+        var version = context.GetEndpoint()?
+            .Metadata
+            .GetMetadata<ApiVersionDateAttribute>()?
+            .Version;
 
         // Remember - we're not actually implementing versioning.  Each endpoint must be unique at the moment, so all
         // we need to test is that the api version matches the endpoint ApiVersionDate value
