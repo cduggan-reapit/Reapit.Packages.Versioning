@@ -8,15 +8,9 @@ namespace Reapit.Packages.Versioning.UnitTests;
 public class TestController : ControllerBase
 {
     [HttpGet("no-version")]
-    public IActionResult NoVersion()
-    {
-        return Ok();
-    }
+    public IActionResult NoVersion() => Ok();
     
     [HttpGet("has-version")]
     [ApiVersionDate("2020-01-31")]
-    public IActionResult HasVersion()
-    {
-        return Ok();
-    }
+    public IActionResult HasVersion() => Ok();
 }
