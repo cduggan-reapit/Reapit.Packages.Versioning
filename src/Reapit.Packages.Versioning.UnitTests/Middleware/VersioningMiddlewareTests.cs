@@ -14,6 +14,15 @@ public class VersioningMiddlewareTests
     private const string TestHeaderKey = "test-api-header";
 
     [Fact]
+    public async Task Invoke_ShouldNotInterrupt_WhenEndpointNotMatched()
+    {
+        using var host = await CreateHost().StartAsync();
+        var client = host.GetTestClient();
+        var result = await client.GetAsync("/no-endpoint");
+        result.Should().HaveStatusCode(HttpStatusCode.NotFound);
+    }
+    
+    [Fact]
     public async Task Invoke_ShouldNotInterrupt_WhenNoHeaderExpected_AndNoneProvided()
     {
         using var host = await CreateHost().StartAsync();
