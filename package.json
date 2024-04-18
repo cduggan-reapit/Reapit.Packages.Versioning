@@ -1,0 +1,31 @@
+{
+  "devDependencies": {
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
+    "@droidsolutions-oss/semantic-release-update-file": "^1.4.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.2",
+    "@semantic-release/release-notes-generator": "^13.0.0",
+    "husky": "^9.0.11",
+    "semantic-release": "^23.0.6"
+  },
+  "scripts": {
+    "prepare": "husky"
+  },
+  "name": "reapit-packages-versioning",
+  "version": "0.0.0-dev",
+  "description": "Rather than rely on versioning that doesn't work, this package just checks that a header has been provided in the correct format.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cduggan-reapit/Reapit.Packages.Versioning.git"
+  },
+  "author": "Craig Duggan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cduggan-reapit/Reapit.Packages.Versioning/issues"
+  },
+  "homepage": "https://github.com/cduggan-reapit/Reapit.Packages.Versioning#readme"
+}
