@@ -9,12 +9,12 @@ Rather than rely on versioning that doesn't work, this package just checks that 
 containing API version information. This is used by the middleware, allowing flexibility from project-to-project. 
 
 ```csharp
-services.AddVersioning("api-version");
+services.AddVersioning("api-version", );
 ```
 
 - This package doesn't actually apply versioning yet - it is intended to replicate the behaviour of our current 
 PlatformVersioning package and just make sure that the header has been provided.
-- It does require that we move away from `UseMvc()` though, and the middleware should be added through the UseVersioning() 
+- It does require that we move away from `UseMvc()` though, and the middleware should be added through the `UseVersioning()` 
 method
 
 ```csharp

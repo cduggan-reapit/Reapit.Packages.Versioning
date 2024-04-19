@@ -9,7 +9,8 @@ public class VersioningConfigurationTests
     public void Ctor_InitializesObject_FromParameters()
     {
         const string header = "test-header";
-        var attribute = new VersioningConfiguration { Header = header };
+        var attribute = new VersioningConfiguration(header, true);
         attribute.Header.Should().Be(header);
+        attribute.AllowLatest.Should().BeTrue();
     }
 }

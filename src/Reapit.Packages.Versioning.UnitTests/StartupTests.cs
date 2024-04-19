@@ -11,10 +11,11 @@ public class StartupTests
     {
         const string header = "test-key";
         var services = new ServiceCollection();
-        services.AddVersioning(header);
+        services.AddVersioning(header, true);
 
         using var provider = services.BuildServiceProvider();
         var config = provider.GetRequiredService<VersioningConfiguration>();
         config.Header.Should().Be(header);
+        config.AllowLatest.Should().BeTrue();
     }
 }

@@ -9,10 +9,14 @@ using Reapit.Packages.Versioning.Exceptions;
 
 namespace Reapit.Packages.Versioning.UnitTests.Middleware;
 
-public class VersioningMiddlewareTests
+public class ApiVersionDateMiddlewareTests
 {
     private const string TestHeaderKey = "test-api-header";
 
+    /*
+     * No Version Expected:
+     */
+    
     [Fact]
     public async Task Invoke_ShouldNotInterrupt_WhenEndpointNotMatched()
     {
@@ -41,6 +45,10 @@ public class VersioningMiddlewareTests
         result.Should().HaveStatusCode(HttpStatusCode.OK);
     }
     
+    /*
+     * Latest not permitted
+     */
+    
     [Fact]
     public async Task Invoke_ShouldThrowException_WhenHeaderExpected_AndNoneProvided()
     {
@@ -52,6 +60,28 @@ public class VersioningMiddlewareTests
     }
     
     [Fact]
+    public async Task Invoke_ShouldThrowException_WhenInvalidDateProvided()
+    {
+        using var host = await CreateHost().StartAsync();
+        var client = host.GetTestClient();
+        client.DefaultRequestHeaders.Add(TestHeaderKey, "26/01/1990");
+        var action = () => client.GetAsync("/has-version");
+        await action.Should().ThrowAsync<VersionException>()
+            .WithMessage(VersionException.InvalidVersionMessage);
+    }
+    
+    [Fact]
+    public async Task Invoke_ShouldThrowException_WhenLatestProvided_AndNotPermitted()
+    {
+        using var host = await CreateHost().StartAsync();
+        var client = host.GetTestClient();
+        client.DefaultRequestHeaders.Add(TestHeaderKey, "latest");
+        var action = () => client.GetAsync("/has-version");
+        await action.Should().ThrowAsync<VersionException>()
+            .WithMessage(VersionException.InvalidVersionMessage);
+    }
+    
+    [Fact]
     public async Task Invoke_ShouldThrowException_WhenHeaderExpected_AndWrongOneProvided()
     {
         using var host = await CreateHost().StartAsync();
@@ -59,9 +89,9 @@ public class VersioningMiddlewareTests
         client.DefaultRequestHeaders.Add(TestHeaderKey, "1970-01-01");
         var action = () => client.GetAsync("/has-version");
         await action.Should().ThrowAsync<VersionException>()
-            .WithMessage(VersionException.InvalidVersionMessage);
+            .WithMessage(VersionException.UnmatchedVersionMessage);
     }
-    
+
     [Fact]
     public async Task Invoke_ShouldNotInterrupt_WhenHeaderExpected_AndCorrectHeaderProvided()
     {
@@ -72,9 +102,33 @@ public class VersioningMiddlewareTests
         result.Should().HaveStatusCode(HttpStatusCode.OK);
     }
     
+    /*
+     * Latest permitted
+     */
+    
+    [Fact]
+    public async Task Invoke_ShouldNotInterrupt_WhenLatestAllowed_AndLatestProvided()
+    {
+        using var host = await CreateHost(true).StartAsync();
+        var client = host.GetTestClient();
+        client.DefaultRequestHeaders.Add(TestHeaderKey, "latest");
+        var result = await client.GetAsync("/has-version");
+        result.Should().HaveStatusCode(HttpStatusCode.OK);
+    }
+    
+    [Fact]
+    public async Task Invoke_ShouldNotInterrupt_WhenLatestAllowed_AndDateProvided()
+    {
+        using var host = await CreateHost(true).StartAsync();
+        var client = host.GetTestClient();
+        client.DefaultRequestHeaders.Add(TestHeaderKey, "2020-01-31");
+        var result = await client.GetAsync("/has-version");
+        result.Should().HaveStatusCode(HttpStatusCode.OK);
+    }
+    
     // Private methods
 
-    private static IHostBuilder CreateHost()
+    private static IHostBuilder CreateHost(bool allowLatest = false)
         => new HostBuilder()
             .ConfigureWebHost(webBuilder =>
             {
@@ -82,7 +136,7 @@ public class VersioningMiddlewareTests
                     .UseTestServer()
                     .ConfigureServices(services =>
                     {
-                        services.AddVersioning(TestHeaderKey);
+                        services.AddVersioning(TestHeaderKey, allowLatest);
                         services.AddRouting();
                         services.AddControllers();
                     })
