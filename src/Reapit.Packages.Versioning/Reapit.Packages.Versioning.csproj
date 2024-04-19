@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>1.1.0</Version>
+    <Title>Reapit.Packages.Versioning</Title>
+    <Description>Fake versioning package</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>CHANGELOG.md</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="../../docs/CHANGELOG.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="Reapit.Packages.Versioning.UnitTests" />
+  </ItemGroup>
+
+</Project>
